@@ -24,9 +24,9 @@ export class Client {
             const message = { // TODO: Sostituire interface con class
                 _id: null,
                 topic,
-                timestamp: timestamp.toISOString(),
+                timestamp: timestamp.toISOString().split('.')[0]+"Z",
                 payload: object,
-                expireAt: expire.toISOString(),
+                expireAt: expire.toDateString().split('.')[0]+"Z",
                 acks: []
             }
             return collection.insertOne(message).then()
