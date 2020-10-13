@@ -3,7 +3,7 @@ import {Message} from "./Event";
 import {Subscription} from "./Subscription";
 
 export class Client {
-    public defaultTTL = 300
+    public defaultTTL: number = 300
     private connection: Promise<MongoClient>
     private database: Db
     private readonly clientName: string;
@@ -19,16 +19,16 @@ export class Client {
     public static publish<T>(object: T, broker: Client, topic: string): Promise<void> {
         return broker.connection.then(_ => {
             const collection = broker.database.collection(topic)
-            const message: Message<T> = { // TODO: Sostituire interface con class
+            let timestamp = new Date()
+            let expire = new Date(timestamp.getTime() + broker.defaultTTL)
+            const message = { // TODO: Sostituire interface con class
                 _id: null,
                 topic,
-                timestamp: new Date(),
+                timestamp: timestamp.toISOString(),
                 payload: object,
-                expireAt: new Date(),
+                expireAt: expire.toISOString(),
                 acks: []
-
             }
-
             return collection.insertOne(message).then()
         });
     }
