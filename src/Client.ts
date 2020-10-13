@@ -26,7 +26,7 @@ export class Client {
                 topic,
                 timestamp: timestamp.toISOString().split('.')[0]+"Z",
                 payload: object,
-                expireAt: expire.toDateString().split('.')[0]+"Z",
+                expireAt: expire.toISOString().split('.')[0]+"Z",
                 acks: []
             }
             return collection.insertOne(message).then()
