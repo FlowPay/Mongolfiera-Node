@@ -7,7 +7,7 @@ export class Client {
     private connection: Promise<MongoClient>
     private database: Db
     private readonly clientName: string;
-    private subscriptions: { topic: string, subscription: Subscription<any> }[]
+    private subscriptions: { topic: string, subscription: Subscription<any> }[] = []
 
     public constructor(dbURI: string, dbName: string, clientName: string) {
         this.clientName = clientName
