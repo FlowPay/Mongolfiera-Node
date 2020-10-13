@@ -62,7 +62,7 @@ export class Client {
         let collection = this.database.collection(event.topic)
         return collection.updateOne(
             {"_id": event._id},
-            {"$push": [{"acks": this.clientName}]}
+            {"$push": {"acks": this.clientName}}
         )
     }
 
