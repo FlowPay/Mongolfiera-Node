@@ -23,7 +23,7 @@ export class Client {
             let timestamp = new Date()
             let expire = new Date(timestamp.getTime() + broker.defaultTTL)
             const message = { // TODO: Sostituire interface con class
-                _id: v4(),
+                _id: v4().toUpperCase(),
                 topic,
                 timestamp: timestamp.toISOString().split('.')[0]+"Z",
                 payload: object,
