@@ -1,6 +1,7 @@
 import {ChangeStream, Collection, Db, MongoClient, UpdateWriteOpResult} from "mongodb";
 import {Message} from "./Event";
 import {Subscription} from "./Subscription";
+import {v4} from "uuid";
 
 export class Client {
     public defaultTTL: number = 300
@@ -22,7 +23,7 @@ export class Client {
             let timestamp = new Date()
             let expire = new Date(timestamp.getTime() + broker.defaultTTL)
             const message = { // TODO: Sostituire interface con class
-                _id: null,
+                _id: v4(),
                 topic,
                 timestamp: timestamp.toISOString().split('.')[0]+"Z",
                 payload: object,
