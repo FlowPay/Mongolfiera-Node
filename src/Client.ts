@@ -1,9 +1,10 @@
 import {ChangeStream, Collection, Db, MongoClient, UpdateWriteOpResult} from "mongodb";
 import {Message} from "./Event";
 import {Subscription} from "./Subscription";
+import {v4} from "uuid";
 
 export class Client {
-    public defaultTTL = 300
+    public defaultTTL: number = 300
     private connection: Promise<MongoClient>
     private database: Db
     private readonly clientName: string;
@@ -19,16 +20,16 @@ export class Client {
     public static publish<T>(object: T, broker: Client, topic: string): Promise<void> {
         return broker.connection.then(_ => {
             const collection = broker.database.collection(topic)
-            const message: Message<T> = { // TODO: Sostituire interface con class
-                _id: null,
+            let timestamp = new Date()
+            let expire = new Date(timestamp.getTime() + broker.defaultTTL)
+            const message = { // TODO: Sostituire interface con class
+                _id: v4().toUpperCase(),
                 topic,
-                timestamp: new Date(),
+                timestamp: timestamp.toISOString().split('.')[0]+"Z",
                 payload: object,
-                expireAt: new Date(),
+                expireAt: expire.toISOString().split('.')[0]+"Z",
                 acks: []
-
             }
-
             return collection.insertOne(message).then()
         });
     }
@@ -62,7 +63,7 @@ export class Client {
         let collection = this.database.collection(event.topic)
         return collection.updateOne(
             {"_id": event._id},
-            {"$push": [{"acks": this.clientName}]}
+            {"$push": {"acks": this.clientName}}
         )
     }
 
