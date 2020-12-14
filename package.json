@@ -25,7 +25,7 @@
   },
   "scripts": {
     "prepare": "tsc -p ./tsconfig.json",
-    "postInstall": "tsc -p ./tsconfig.json",
+    "postinstall": "npm run build",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register 'tests/**/*.ts'",
     "clean": "rimraf dist",
     "build": "tsc -p ./tsconfig.json"
