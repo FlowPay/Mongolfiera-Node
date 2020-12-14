@@ -13,7 +13,8 @@
     "module": "ES6",
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "lib": [
-      "ES6"
+      "es2016",
+      "dom"
     ],
     /* Specify library files to be included in the compilation. */
     "allowJs": true,
@@ -92,10 +93,7 @@
       "./node_modules/@types"
     ],
     /* List of folders to include type definitions from. */
-    "types": [
-      "mocha",
-      "chai"
-    ],
+    "types": [],
     /* Type declaration files to be included in compilation. */
     "allowSyntheticDefaultImports": true,
     /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
