@@ -232,3 +232,4 @@ $RECYCLE.BIN/
 *.msp
 *.txz
 
+build.json
